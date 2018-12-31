@@ -6,8 +6,9 @@ class Graph:
         self.graphAdjacencyList = defaultdict(list)
         self.maximumNodeNumber = 0
 
-    def add_edge(self, u, v):
+    def add_bidirectional_edge(self, u, v):
         self.graphAdjacencyList[u].append(v)
+        self.graphAdjacencyList[v].append(u)
         self.maximumNodeNumber = max(u, v, self.maximumNodeNumber)
 
     def print_edges(self):

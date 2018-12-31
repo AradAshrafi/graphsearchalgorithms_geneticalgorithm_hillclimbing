@@ -31,11 +31,11 @@ def tree_dfs(root):
 if __name__ == '__main__':
     # Graph
     g = Graph()
-    g.add_edge(0, 1)
-    g.add_edge(0, 2)
-    g.add_edge(1, 2)
-    g.add_edge(2, 0)
-    g.add_edge(2, 3)
+    g.add_bidirectional_edge(0, 1)
+    g.add_bidirectional_edge(0, 2)
+    g.add_bidirectional_edge(1, 2)
+    g.add_bidirectional_edge(2, 0)
+    g.add_bidirectional_edge(2, 3)
 
     print("traversal of graph is")
     graph_dfs(graph=g, starting_node=1)
