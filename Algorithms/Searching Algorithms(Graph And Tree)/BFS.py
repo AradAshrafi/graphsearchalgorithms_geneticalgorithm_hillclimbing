@@ -4,7 +4,7 @@ from Utils.Node import Node
 
 def graph_bfs(graph, starting_node):
     # Mark all the vertices as not visited
-    visited = [False] * (graph.maximumNodeNumber + 1)
+    visited = {key: False for key in graph.graphAdjacencyList}
     # BFS traversal
     # first visit starting node
     nodes_to_visit_queue = [starting_node]
@@ -31,14 +31,18 @@ def tree_bfs(starting_node):
 if __name__ == '__main__':
     # Graph
     g = Graph()
-    g.add_bidirectional_edge(0, 1)
-    g.add_bidirectional_edge(0, 2)
-    g.add_bidirectional_edge(1, 2)
-    # g.add_bidirectional_edge(2, 0)
-    g.add_bidirectional_edge(2, 3)
+    # g.add_bidirectional_edge(0, 1)
+    # g.add_bidirectional_edge(0, 2)
+    # g.add_bidirectional_edge(1, 2)
+    # # g.add_bidirectional_edge(2, 0)
+    # g.add_bidirectional_edge(2, 3)
+    g.add_bidirectional_edge("1","2")
+    g.add_bidirectional_edge("2", "Arad")
+    g.add_bidirectional_edge("Arad", "Araaad")
+    g.add_bidirectional_edge("Araaaad", "NNN")
 
     print("traversal of graph is")
-    graph_bfs(graph=g, starting_node=1)
+    graph_bfs(graph=g, starting_node="Arad")
 
     # Tree
     root = Node(1)
