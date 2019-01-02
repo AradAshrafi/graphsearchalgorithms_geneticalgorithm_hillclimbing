@@ -1,4 +1,4 @@
-Algorithms That Are Implemented 
+Algorithms That Are Implemented :
 
 [For Both Graph Search And Tree Search]:
     1.Depth First Search
@@ -12,4 +12,6 @@ Algorithms That Are Implemented
     8-simulated annealing
     9-Hill Climbing
     10-Genetic Algorithm
-    
+-------------------------------------------------------------------------------------------
+Tree Search and Graph Search difference is just that in tree search we wont check a node
+is visited or not,because it's a tree
