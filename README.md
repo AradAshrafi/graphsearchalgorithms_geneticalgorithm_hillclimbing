@@ -1,13 +1,15 @@
 Algorithms That Are Implemented 
 
 [For Both Graph Search And Tree Search]:
-    1-Depth First Search
+    1.Depth First Search
     2.Breadth First Search
-    3-Uniform Cost
-    4-Greedy Best First Search
-    5-A*
+    3.Depth Limited Search
+    4.Iterative Deepening Depth First Search
+    5.Uniform Cost
+    6.Greedy Best First Search
+    7.A*
 [Just For Graphs]:
-    6-simulated annealing
-    7-Hill Climbing
-    8-Genetic Algorithm
+    8-simulated annealing
+    9-Hill Climbing
+    10-Genetic Algorithm
     

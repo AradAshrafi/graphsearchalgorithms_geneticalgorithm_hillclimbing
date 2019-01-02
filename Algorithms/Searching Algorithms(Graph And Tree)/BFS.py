@@ -20,7 +20,7 @@ def graph_bfs(start_node, destination_node):
         # check if we reach destination
         if last_visited_node == destination_node:
             break
-    return expanded_nodes, nodes_to_visit_queue, max_mem_usage
+    return expanded_nodes.__len__(), nodes_to_visit_queue.__len__(), max_mem_usage
 
 
 def tree_bfs(start_node, destination_node):
