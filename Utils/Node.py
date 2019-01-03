@@ -6,3 +6,10 @@ class Node:
         self.visited = False
         self.parent = None  # this will be used to find the path
         self.costFromOrigin = 0  # will be used for uniform cost & A*
+
+
+class Node2:
+    def __init__(self, name):
+        self.name = name
+        self.neighbours = set()
+        self.color = 0

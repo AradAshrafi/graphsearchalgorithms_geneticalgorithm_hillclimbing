@@ -35,11 +35,14 @@ class RoutingBetweenCities:
             current_node = Node(name=x, heuristic=self.initialStateHeuristics[x])
             graph_details_dictionary.update({x: current_node})
 
-        # fill children field of each node and assign pointers to it's children
+        # fill children field of each node and assign pointers to it's children with it's corresponding cost
+        # children field is a dictionary consist of children nodes and their cost
+        # in this form -> a.children = {"city a" : 200 , "city b" : 400}
         for x in graph_details_dictionary:
             for y in self.initialStateAdjacencyList[x]:
                 graph_details_dictionary[x].children.update(
-                    {graph_details_dictionary[y]: self.initialStateAdjacencyList[x][y]})
+                    {graph_details_dictionary[y]: self.initialStateAdjacencyList[x][y]})  # update children dictionary
+                # like the form specified above :{"child city x" :200}
 
         return graph_details_dictionary
 
