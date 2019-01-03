@@ -4,6 +4,9 @@ from BFS import tree_bfs, graph_bfs
 from DFS import tree_dfs, graph_dfs
 from greedy_best_first_search import greedy_best_first_search, tree_greedy_best_first_search
 from uniform_cost import uniform_cost, tree_uniform_cost
+from LDFS import graph_ldfs
+from IDFS import graph_idfs
+from a_star import a_star
 
 
 def main():
@@ -16,7 +19,7 @@ def main():
     max_memory_usage = 0
     # define mode to perform algorithm
     mode = "Graph"
-    algorithm = "UNIFORM COST"
+    algorithm = "IDFS"
     if mode == "Graph":
         # Graph
         print("traversal of graph is")
@@ -29,6 +32,14 @@ def main():
         if algorithm == "DFS":
             # preform DFS on graph
             graph_dfs(start_node=start_node, destination_node=dest_node)
+
+        if algorithm == "LDFS":
+            graph_ldfs(start_node=start_node, destination_node=dest_node, depth_limit=2)
+
+        if algorithm == "IDFS":
+            graph_city_details_dictionary = graph_idfs(graph_city_details_dictionary=graph_city_details_dictionary)
+            start_node = graph_city_details_dictionary["Arad"]
+            dest_node = graph_city_details_dictionary["Bucharest"]
 
         if algorithm == "GREEDY BEST FIRST SEARCH":
             expanded_nodes, unexpanded_nodes, max_memory_usages = greedy_best_first_search(start_node=start_node,
