@@ -1,10 +1,11 @@
 from copy import deepcopy as clone
+from random import randint as randint
 
 
 class State:
     def __init__(self, graph_structure, edges_number):
-        self.graphStructure = graph_structure
-        self.edgesNumber = edges_number
+        self.graphStructure = graph_structure  # list of nodes
+        self.edgesNumber = edges_number  # total edges in a graph
 
     # evaluate current state value based on evaluation function
     def evaluate_value(self):
@@ -21,6 +22,8 @@ class State:
         possible_next_states = []
         current_value = self.evaluate_value()
         for i in range(len(self.graphStructure)):
+            # we must clone it
+            # otherwise we will be changing the source structure for ever and we'll only get one new state at the end
             new_state = clone(self)
             new_state2 = clone(self)
             increase_node_color(new_state.graphStructure[i])
@@ -30,6 +33,14 @@ class State:
             if new_state2.evaluate_value() > current_value:
                 possible_next_states.append(new_state2)
         return possible_next_states
+
+    def new_random_state(self):  # will be used in random restart and genetic
+        new_state = clone(self)
+        # must clone last graph,otherwise our source graph will change,because it contains pointers to nodes,and we are
+        # -changing that same nodes colour
+        for node in new_state.graphStructure:
+            node.colour = randint(0, 3)
+        return new_state
 
 
 def increase_node_color(node):
