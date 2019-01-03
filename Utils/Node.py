@@ -12,4 +12,4 @@ class Node2:
     def __init__(self, name):
         self.name = name
         self.neighbours = set()
-        self.color = 0
+        self.colour = 0

@@ -6,6 +6,7 @@ class State:
         self.graphStructure = graph_structure
         self.edgesNumber = edges_number
 
+    # evaluate current state value based on evaluation function
     def evaluate_value(self):
         delta = 0
         for x in self.graphStructure:
@@ -19,7 +20,7 @@ class State:
     def possible_next_states(self):
         possible_next_states = []
         current_value = self.evaluate_value()
-        for i in range(self.graphStructure):
+        for i in range(len(self.graphStructure)):
             new_state = clone(self)
             new_state2 = clone(self)
             increase_node_color(new_state.graphStructure[i])
