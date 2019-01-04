@@ -4,8 +4,8 @@ from hill_climbing.stochastic_hill_climbing import stochastic_hill_climbing
 from hill_climbing.simple_hill_climbing import simple_hill_climbing
 from hill_climbing.first_choice_hill_climbing import first_choice_hill_climbing
 from hill_climbing.random_restart_hill_climbing import random_restart_hill_climbing
+from hill_climbing.simulated_annealing import simulated_annealing
 from genetic import genetic
-from simulated_annealing import simulated_annealing
 
 
 def main():

@@ -18,7 +18,7 @@ class State:
         return delta
 
     # calculate possible next moves(states) among neighbours state
-    def possible_next_states(self):
+    def possible_next_states(self, only_better_states=True):
         possible_next_states = []
         current_value = self.evaluate_value()
         for i in range(len(self.graphStructure)):
@@ -28,10 +28,13 @@ class State:
             new_state2 = clone(self)
             increase_node_color(new_state.graphStructure[i])
             decrease_node_color(new_state2.graphStructure[i])
-            if new_state.evaluate_value() > current_value:
-                possible_next_states.append(new_state)
-            if new_state2.evaluate_value() > current_value:
-                possible_next_states.append(new_state2)
+            if only_better_states:
+                if new_state.evaluate_value() > current_value:
+                    possible_next_states.append(new_state)
+                if new_state2.evaluate_value() > current_value:
+                    possible_next_states.append(new_state2)
+            else:
+                possible_next_states.extend([new_state, new_state2])
         return possible_next_states
 
     def new_random_state(self):  # will be used in random restart and genetic
@@ -41,6 +44,10 @@ class State:
         for node in new_state.graphStructure:
             node.colour = randint(0, 3)
         return new_state
+
+    def print_state(self):
+        for node in self.graphStructure:
+            print(node.name, ":", node.colour, ",", end=" ")
 
 
 def increase_node_color(node):
