@@ -5,9 +5,10 @@ def simulated_annealing(initial_state):
     current_state = initial_state
     expanded_states = 0
     viewed_states = 0
+    # boolean that notify us when cooling process has been stopped
     cooling_in_process = True
     while cooling_in_process:
-        print(current_state.evaluate_value())
+        # print(current_state.evaluate_value())
         next_states = current_state.possible_next_states(
             only_better_states=False)  # find all possible next states better or worse than current one
         if len(next_states) == 0:

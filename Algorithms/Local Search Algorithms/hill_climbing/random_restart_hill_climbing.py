@@ -6,7 +6,7 @@ def random_restart_hill_climbing(initial_state):
     expanded_states = 0
     viewed_states = 0
     while True:
-        print(current_state.evaluate_value())
+        # print(current_state.evaluate_value())
         next_states = current_state.possible_next_states()  # find all possible next states better than current one
         if len(next_states) == 0:
             if best_state.evaluate_value() < current_state.evaluate_value():

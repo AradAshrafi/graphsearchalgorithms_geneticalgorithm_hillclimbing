@@ -22,7 +22,7 @@ def main():
     # Create Initial State with structure and edges number
     initial_state = State(graph_structure=graph_structure, edges_number=edges_number)
     # Perform Algorithms :
-    algorithm = "SIMULATED ANNEALING"
+    algorithm = "GENETIC"
     if algorithm == "SIMPLE HILL CLIMBING":
         simple_hill_climbing(initial_state)
 
@@ -39,10 +39,10 @@ def main():
         simulated_annealing(initial_state=initial_state)
 
     if algorithm == "GENETIC":
-        number_of_generations = 50
-        population_size = 10
+        number_of_generations = 5000
+        population_size = 100
         tournament_size = 5
-        mutation_rate = 0.01
+        mutation_rate = 0.05
         genetic(initial_state=initial_state, number_of_generations=number_of_generations,
                 population_size=population_size, tournament_size=tournament_size,
                 mutation_rate=mutation_rate)

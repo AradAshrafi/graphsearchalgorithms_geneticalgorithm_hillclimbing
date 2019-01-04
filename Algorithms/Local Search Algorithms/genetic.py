@@ -1,5 +1,6 @@
 from random import randint
 from copy import deepcopy as clone
+import matplotlib.pyplot as plt
 
 
 def genetic(initial_state, number_of_generations, population_size, tournament_size, mutation_rate):
@@ -10,6 +11,11 @@ def genetic(initial_state, number_of_generations, population_size, tournament_si
     # total mutated genomes =  genome numbers in each chromosome * population size of chromosomes * mutation rate -->
     number_of_each_chromosomes_genome = len(initial_state.graphStructure)
     total_mutated_genomes = number_of_each_chromosomes_genome * mutation_rate * population_size
+
+    # these sets are defined to draw plots and save them in work report
+    best_chromosomes_of_each_generation_value = []
+    worst_chromosomes_of_each_generation_value = []
+    avg_chromosomes_of_each_generation_value = []
 
     # create initial population based on population_size (INITIAL POPULATION step)
     population = generate_population(initial_state=initial_state, population_size=population_size)
@@ -24,11 +30,29 @@ def genetic(initial_state, number_of_generations, population_size, tournament_si
                                          population_size=population_size,
                                          number_of_each_chromosomes_genome=number_of_each_chromosomes_genome,
                                          mutated_genomes_number=total_mutated_genomes)
-    best_state = population[0]  # initiate our best_chromosome
-    for state in population:
-        if state.evaluate_value() > best_state.evaluate_value():
-            best_state = state
-    print(best_state.evaluate_value())
+        population.sort(key=lambda x: x.evaluate_value(), reverse=True)
+        # append the best state to it's array to plot best states per generation
+        best_chromosomes_of_each_generation_value.append(population[0].evaluate_value())
+        # append the worst state to it's array to plot worst states per generation
+        worst_chromosomes_of_each_generation_value.append(population[population_size - 1].evaluate_value())
+        # append the avg value of all states to it's array to plot avg values per generation
+        avg_chromosomes_of_each_generation_value.append(find_avg_value_of_chromosomes(population=population,
+                                                                                      population_size=population_size))
+    print("number of generation : " + str(number_of_generations) + "\n" +
+          "population size : " + str(population_size) + "\n" +
+          "tournament size : " + str(tournament_size) + "\n" +
+          "mutation rate : " + str(mutation_rate) + "\n" +
+          "AVERAGE VALUE CONVERGENCE : " + str(avg_chromosomes_of_each_generation_value[number_of_generations-1]))
+
+
+# plot_generations_evaluated_value(best_chromosomes=best_chromosomes_of_each_generation_value,
+#                                  avg_chromosomes=avg_chromosomes_of_each_generation_value,
+#                                  worst_chromosomes=worst_chromosomes_of_each_generation_value,
+#                                  details="number of generation : " + str(number_of_generations) + "\n" +
+#                                          "population size : " + str(population_size) + "\n" +
+#                                          "tournament size : " + str(tournament_size) + "\n" +
+#                                          "mutation rate : " + str(mutation_rate)
+#                                  )
 
 
 def generate_population(initial_state, population_size):
@@ -97,7 +121,8 @@ def __apply_child_similarity_dosage(child_chromosome_similarity_to_first_chromos
     distributed_probability_array = []
     distributed_probability_array.extend([1] * child_chromosome_similarity_to_first_chromosome)
     distributed_probability_array.extend([2] * (10 - child_chromosome_similarity_to_first_chromosome))
-    winner_parent_for_current_gene = distributed_probability_array[randint(0, len(distributed_probability_array) - 1)]
+    winner_parent_for_current_gene = distributed_probability_array[
+        randint(0, len(distributed_probability_array) - 1)]
     return winner_parent_for_current_gene
 
 
@@ -113,3 +138,24 @@ def apply_mutation_on_new_generation(population, population_size, number_of_each
         # my way to mutate colour number
         genomes_to_mutate.colour = (genomes_to_mutate.colour + randint(-10, 10)) % 3
         mutated_genomes_number -= 1
+
+
+def find_avg_value_of_chromosomes(population, population_size):
+    total_value = 0
+    for state in population:
+        total_value += state.evaluate_value()
+    return total_value / population_size
+
+
+# plot worst state value,best state value and avg value of each state per generation
+def plot_generations_evaluated_value(best_chromosomes, avg_chromosomes, worst_chromosomes, details=""):
+    plt.plot(best_chromosomes)
+    plt.plot(avg_chromosomes)
+    plt.plot(worst_chromosomes)
+    plt.legend(["best chromosome's value ", "avg chromosomes' value ",
+                "worst chromosome's value "], loc='lower right')
+    plt.ylabel("evaluated values")
+    plt.xlabel("generation")
+
+    plt.figtext(x=0.4, y=0.4, s=details, fontsize=10)
+    plt.show()
