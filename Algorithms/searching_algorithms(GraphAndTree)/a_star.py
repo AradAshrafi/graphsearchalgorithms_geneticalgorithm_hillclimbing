@@ -1,6 +1,6 @@
-def uniform_cost(start_node, dest_node):
+def a_star(start_node, dest_node):
     expanded_nodes = set()  # to
-    visited_nodes_list = []  # must sort them base on their costFromOrigin
+    visited_nodes_list = {}  # must sort them base on their h(n) + g(n) = f(n)
     expanded_nodes.add(start_node)
     start_node.visited = True
     current_node = start_node
@@ -11,7 +11,7 @@ def uniform_cost(start_node, dest_node):
             break
         for x in current_node.children:
             if expanded_nodes.__contains__(x):
-                # if this child is added to expanded node,it has found it's shortest path from origin
+                # if this child is added to expanded nodes set before,it has found it's shortest path from origin
                 # we can't update this node better than this -> we pass to current_node's next child
                 continue
             if not x.visited:
@@ -21,7 +21,8 @@ def uniform_cost(start_node, dest_node):
                 x.parent = current_node
                 x.costFromOrigin = current_node.costFromOrigin + current_node.children[
                     x]  # parent's costFromOrigin from origin + distance between'em
-                visited_nodes_list.append(x)
+                heuristic_plus_cost = x.costFromOrigin + x.heuristic
+                visited_nodes_list.update({x: heuristic_plus_cost})
             else:
                 # x has been visited before
                 # so we must compare this new path with previous one and assign minimum of them to x's cost
@@ -30,28 +31,38 @@ def uniform_cost(start_node, dest_node):
                 if new_cost < x.costFromOrigin:
                     x.costFromOrigin = new_cost
                     x.parent = current_node
+                    # f(n) of x is also changed,so i must update it's value in visited_nodes dictionary
+                    # to do so,i'll first remove it from dictionary and then add correct value of it
+                    # actually i could add another field to Node named f or something like that
+                    # that will avoid this deleting and adding to dictionary,like what i did in uniform cost
+                    # i just liked to try this new approach as well :D,and don't complicate my Node structure further
+                    del visited_nodes_list[x]
+                    visited_nodes_list.update({x: (x.costFromOrigin + x.heuristic)})
+
         # find next node with lowest cost to be expanded next
-        current_node = find_next_node_with_lowest_cost(visited_nodes_list=visited_nodes_list)
+        current_node = find_next_node_with_lowest_predicted_cost(visited_nodes_list=visited_nodes_list)
         # remove it from unexpanded nodes list and add it to expanded set
-        visited_nodes_list.remove(current_node)
+        del visited_nodes_list[current_node]
         expanded_nodes.add(current_node)
 
     return expanded_nodes.__len__(), visited_nodes_list.__len__()  # return them to compare with other algorithms
 
 
 # function that finds node with lowest cost in unexpanded nodes list
-def find_next_node_with_lowest_cost(visited_nodes_list):
-    lowest_cost_node = visited_nodes_list[0]
+def find_next_node_with_lowest_predicted_cost(visited_nodes_list):
+    lowest_cost = 1000000
+    lowest_cost_node = None
     for node in visited_nodes_list:
-        if node.costFromOrigin < lowest_cost_node.costFromOrigin:
+        if visited_nodes_list[node] < lowest_cost:
             lowest_cost_node = node
+            lowest_cost = visited_nodes_list[node]
     return lowest_cost_node
 
 
 # in Tree mode we won't check if node is visited or not (obvious though)
-def tree_mode_uniform_cost(start_node, dest_node):
-    expanded_nodes = set()  # to compare it with other algorithms
-    visited_nodes_list = []  # must sort them base on their costFromOrigin
+def tree_mode_a_star(start_node, dest_node):
+    expanded_nodes = set()  # to
+    visited_nodes_list = {}  # must sort them base on their h(n) + g(n) = f(n)
     expanded_nodes.add(start_node)
     current_node = start_node
     start_node.costFromOrigin = 0
@@ -61,14 +72,18 @@ def tree_mode_uniform_cost(start_node, dest_node):
         if dest_node.parent is not None:
             break
         for x in current_node.children:
-            # reminder : we won't check it it's visited or not in tree
+            # reminder:we don't check if this node has been visited before or not in tree
             # for more clarity read comments of graph mode
             x.parent = current_node
             x.costFromOrigin = current_node.costFromOrigin + current_node.children[
                 x]  # parent's costFromOrigin from origin + distance between'em
-            visited_nodes_list.append(x)
+            heuristic_plus_cost = x.costFromOrigin + x.heuristic
+            visited_nodes_list.update({x: heuristic_plus_cost})
 
-        current_node = find_next_node_with_lowest_cost(visited_nodes_list=visited_nodes_list)
-        visited_nodes_list.remove(current_node)
+        # find next node with lowest cost to be expanded next
+        current_node = find_next_node_with_lowest_predicted_cost(visited_nodes_list=visited_nodes_list)
+        # remove it from unexpanded nodes list and add it to expanded set
+        del visited_nodes_list[current_node]
         expanded_nodes.add(current_node)
-    return expanded_nodes.__len__(), visited_nodes_list.__len__()
+
+    return expanded_nodes.__len__(), visited_nodes_list.__len__()  # return them to compare with other algorithms

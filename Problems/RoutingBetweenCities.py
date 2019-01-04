@@ -8,7 +8,7 @@ class RoutingBetweenCities:
                                           "Zerind": {"Oradea": 71, "Arad": 75},
                                           "Timisoara": {"Arad": 118, "Lugoj": 111},
                                           "Sibiu": {"Arad": 140, "Oradea": 151, "Fagaras": 99, "Rimnicu Vilcea": 80},
-                                          "Oradea": {"Zerind": 71, "Sibiu": 151},
+                                          "Oradea": {"Sibiu": 151, "Zerind": 71},
                                           "Lugoj": {"Timisoara": 111, "Mehadia": 70},
                                           "Fagaras": {"Sibiu": 99, "Bucharest": 211},
                                           "Rimnicu Vilcea": {"Sibiu": 80, "Pitesti": 97, "Craiova": 146},

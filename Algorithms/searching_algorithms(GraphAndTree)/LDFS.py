@@ -13,9 +13,15 @@ def graph_ldfs(start_node, destination_node, depth_limit):
             graph_ldfs(x, destination_node, depth_limit)
 
 
-# tod
-def tree_ldfs(root, destination_node):
-    if destination_node.visited:
+# in tree mode we won't check if a node is visited or not before
+def tree_ldfs(root, destination_node, depth_limit):
+    # first check if it's exceeded the allowed depth
+    if root.depth > depth_limit:
         return
-    for child in root.children:
-        tree_ldfs(child, destination_node)
+    # check if we found destination node or not
+    if destination_node.parent is not None:
+        return
+    for x in root.children:
+        x.parent = root
+        x.depth = root.depth + 1
+        graph_ldfs(x, destination_node, depth_limit)

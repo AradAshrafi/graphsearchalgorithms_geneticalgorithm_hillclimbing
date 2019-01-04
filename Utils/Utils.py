@@ -10,7 +10,7 @@ def path_to_destination(destination_node):
         node = node.parent
     path_to_dest.reverse()
     for x in path_to_dest:
-        print(x.name, end=" ")
+        print(x.name, "      ", end=" ")
     print()
     return path_to_dest
     # Recursive Implementation ------------->
