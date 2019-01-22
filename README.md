@@ -14,4 +14,4 @@ Algorithms That Are Implemented :
     10-Genetic Algorithm
 -------------------------------------------------------------------------------------------
 Tree Search and Graph Search difference is just that in tree search we wont check a node
-is visited or not,because it's a tree
+is visited or not
